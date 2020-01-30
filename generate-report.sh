@@ -7,7 +7,9 @@
 # Also see https://parasitetracker.org, https://globalbioticinteractions.org, and https://github.com/globalbioticinteractions/globalbioticinteractions/issues/453 . 
 # 
 # Prerequisites: Java and https://github.com/globalbioticinteractions/elton .
-# 
+#
+# To upload report archive to file.io, provide any non-empty argument.
+#
 
 TODAY=`date --iso-8601`
 REPORT_DIR=output/$TODAY
@@ -18,7 +20,7 @@ REVIEW_BY_COLLECTION=$REPORT_DIR/review_notes_by_collection.tsv
 INTERACTIONS=$REPORT_DIR/interactions.tsv
 INTERACTIONS_BY_COLLECTION=$REPORT_DIR/interactions_by_collection.tsv
 
-echo $1
+echo "first argument: [$1]"
 
 # updating TPT affiliated elton datasets
 if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
@@ -50,7 +52,7 @@ cat $REVIEW_BY_COLLECTION
 echo -e "\nFor more information, see $PWD/$REPORT_DIR"
 
 # upload only in travis environment
-if [[ -z "${TRAVIS_REPO_SLUG}" ]]; then
+if [[ -z "${1}" ]]; then
   zip $REPORT_ARCHIVE $REPORT_DIR/*
   echo -e "\nDownload the full report using single-use, and expiring, file.io link at:"
   curl -F "file=@$REPORT_ARCHIVE" https://file.io 
