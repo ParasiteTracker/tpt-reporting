@@ -18,7 +18,7 @@ REVIEW_BY_COLLECTION=$REPORT_DIR/review_notes_by_collection.tsv
 INTERACTIONS=$REPORT_DIR/interactions.tsv
 INTERACTIONS_BY_COLLECTION=$REPORT_DIR/interactions_by_collection.tsv
 
-echo $TRAVIS_REPO_SLUG
+echo $1
 
 # updating TPT affiliated elton datasets
 if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
