@@ -18,7 +18,7 @@ INTERACTIONS=$REPORT_DIR/interactions.tsv
 INTERACTIONS_BY_COLLECTION=$REPORT_DIR/interactions_by_collection.tsv
 
 # updating TPT affiliated elton datasets
-#cat datasets.tsv | xargs elton update 
+cat datasets.tsv | xargs elton update 
 
 # generating review reports
 cat datasets.tsv | xargs elton review --type note > $REVIEW
