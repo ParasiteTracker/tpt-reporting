@@ -47,7 +47,9 @@ cat $REVIEW_BY_COLLECTION
 
 echo -e "\nFor more information, see $PWD/$REPORT_DIR"
 
-zip $REPORT_ARCHIVE $REPORT_DIR/*
-
-echo -e "\nDownload the full report using single-use, and expiring, file.io link at:"
-curl -F "file=@$REPORT_ARCHIVE" https://file.io 
+# upload only in travis environment
+if [[ -z "${TRAVIS_REPO_SLUG}" ]]; then
+  zip $REPORT_ARCHIVE $REPORT_DIR/*
+  echo -e "\nDownload the full report using single-use, and expiring, file.io link at:"
+  curl -F "file=@$REPORT_ARCHIVE" https://file.io 
+fi
