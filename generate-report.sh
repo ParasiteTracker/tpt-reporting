@@ -18,6 +18,8 @@ REVIEW_BY_COLLECTION=$REPORT_DIR/review_notes_by_collection.tsv
 INTERACTIONS=$REPORT_DIR/interactions.tsv
 INTERACTIONS_BY_COLLECTION=$REPORT_DIR/interactions_by_collection.tsv
 
+echo $TRAVIS_REPO_SLUG
+
 # updating TPT affiliated elton datasets
 if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
   cat datasets.tsv | xargs java -Dgithub.client.id=$GITHUB_CLIENT_ID -Dgithub.client.secret=$GITHUB_CLIENT_SECRET -jar $(which elton) update 
