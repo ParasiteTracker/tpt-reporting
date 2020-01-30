@@ -34,16 +34,16 @@ cat datasets.tsv | xargs elton interactions > $INTERACTIONS
 echo -e "#notes\tcollectionCode\tnote" > $REVIEW_BY_COLLECTION
 cat $REVIEW | tail -n+2 | awk -F '\t' '{ print $9 "\t" $6 }' | sort | uniq -c | sort -nr | sed 's/[ ]*//;s/[ ]/\t/' >> $REVIEW_BY_COLLECTION
 
-echo "group interaction data by collection"
+# group interaction data by collection
 echo -e "#records\tcollectionCode\tinteractionTypeId\tinteractionTypeName" > $INTERACTIONS_BY_COLLECTION
 cat $INTERACTIONS | tail -n+2 | awk -F '\t' '{ print $4 "\t" $18 "\t" $19 }' | sort | uniq -c | sort -nr | sed 's/[ ]*//;s/[ ]/\t/' >> $INTERACTIONS_BY_COLLECTION
 
-echo "---- interaction record by interaction type by collection"
+echo -e "\n---- interaction record by interaction type by collection ----"
 cat $INTERACTIONS_BY_COLLECTION
 
-echo -e "\n---- review notes by collection"
+echo -e "\n---- review notes by collection ----"
 cat $REVIEW_BY_COLLECTION
 
-echo -e "\nfor more information, see $REPORT_DIR"
+echo -e "\nFor more information, see $PWD/$REPORT_DIR"
 
 
