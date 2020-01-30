@@ -23,17 +23,18 @@ echo "updating TPT affiliated elton datasets"
 #cat datasets.tsv | xargs elton update 
 
 echo "generating review reports"
-cat datasets.tsv | xargs elton review --type note >> $REVIEW
+cat datasets.tsv | xargs elton review --type note > $REVIEW
 
 echo "generating interaction data"
-cat datasets.tsv | xargs elton interactions >> $INTERACTIONS
+cat datasets.tsv | xargs elton interactions > $INTERACTIONS
 
 echo "group review notes by collection"
-cat $REVIEW | tail -n+2 | awk -F '\t' '{ print $9 "\t" $6 }' | sort | uniq -c | sort -nr > $REVIEW_BY_COLLECTION
+echo -e "#notes\tcollectionCode\tnote" > $REVIEW_BY_COLLECTION
+cat $REVIEW | tail -n+2 | awk -F '\t' '{ print $9 "\t" $6 }' | sort | uniq -c | sort -nr | sed 's/[ ]*//;s/[ ]/\t/' >> $REVIEW_BY_COLLECTION
 
 echo "group interaction data by collection"
-cat $INTERACTIONS | tail -n+2 | awk -F '\t' '{ print $4 "\t" $18 "\t" $19 }' | sort | uniq -c | sort -nr 
- > $INTERACTIONS_BY_COLLECTION
+echo -e "#records\tcollectionCode\tinteractionTypeId\tinteractionTypeName" > $INTERACTIONS_BY_COLLECTION
+cat $INTERACTIONS | tail -n+2 | awk -F '\t' '{ print $4 "\t" $18 "\t" $19 }' | sort | uniq -c | sort -nr | sed 's/[ ]*//;s/[ ]/\t/' >> $INTERACTIONS_BY_COLLECTION
 
 echo "contents of $REPORT_DIR:"
 ls -1 $REPORT_DIR
