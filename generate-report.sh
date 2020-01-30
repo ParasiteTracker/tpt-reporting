@@ -34,7 +34,7 @@ cat datasets.tsv | xargs elton interactions > $INTERACTIONS
 
 # group review notes by collection
 echo -e "#notes\tcollectionCode\tnote" > $REVIEW_BY_COLLECTION
-cat $REVIEW | tail -n+2 | awk -F '\t' '{ print $9 "\t" $6 }' | sort | uniq -c | sort -nr | sed 's/[ ]*//;s/[ ]/\t/' >> $REVIEW_BY_COLLECTION
+cat $REVIEW | tail -n+2 | awk -F '\t' '{ print $10 "\t" $6 }' | sort | uniq -c | sort -nr | sed 's/[ ]*//;s/[ ]/\t/' >> $REVIEW_BY_COLLECTION
 
 # group interaction data by collection
 echo -e "#records\tcollectionCode\tinteractionTypeId\tinteractionTypeName" > $INTERACTIONS_BY_COLLECTION
