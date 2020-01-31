@@ -23,18 +23,18 @@ INTERACTIONS_BY_COLLECTION=$REPORT_DIR/interactions_by_collection.tsv
 if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
   cat datasets.tsv | xargs java -Xmx4G -Dgithub.client.id=$GITHUB_CLIENT_ID -Dgithub.client.secret=$GITHUB_CLIENT_SECRET -jar $(which elton) update 
 else
-  cat datasets.tsv | xargs java -Xmx4G -jar $(which elton) update
+  cat datasets.tsv | xargs elton update
 fi
 
 echo -e "\n"
 
 # generating review reports
-cat datasets.tsv | xargs -L1 java -Xmx4G -jar $(which elton) review --type note | tail -n+2 >> $REVIEW
+cat datasets.tsv | xargs -L1 elton review --type note | tail -n+2 >> $REVIEW
 
 echo -e "\n"
 
 # generating interaction data
-cat datasets.tsv | xargs -L1 java -Xmx4G -jar $(which elton) interactions | tail -n+2 >> $INTERACTIONS
+cat datasets.tsv | xargs -L1 elton interactions | tail -n+2 >> $INTERACTIONS
 
 # group review notes by collection
 echo -e "#notes\tnamespace\tinstitutionCode\tcollectionCode\tnote" > $REVIEW_BY_COLLECTION

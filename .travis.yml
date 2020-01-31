@@ -1,5 +1,5 @@
 install:
-- sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/globalbioticinteractions/elton/releases/download/0.7.2/elton.jar)
+- sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/globalbioticinteractions/elton/releases/download/0.7.3/elton.jar)
   > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
 script:
 - "./generate-report.sh $TRAVIS_REPO_SLUG"
