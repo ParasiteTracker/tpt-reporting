@@ -10,7 +10,9 @@
 #
 #
 
-TODAY=`date --iso-8601`
+set -x
+
+TODAY=$(date "+%Y-%m-%d")
 REPORT_DIR=output/$TODAY
 REPORT_ARCHIVE=output/tpt-globi-report-$TODAY.zip
 mkdir -p $REPORT_DIR
