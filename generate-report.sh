@@ -56,7 +56,7 @@ cat $REVIEW_BY_COLLECTION
 
 echo -e "\nFor more information, see $PWD/$REPORT_DIR"
 
-NUMBER_OF_INTERACTIONS=$(cat $INTERACTIONS | wc -l | sort | uniq)
+NUMBER_OF_INTERACTIONS=$(cat $INTERACTIONS | sort | uniq | wc -l)
 
 if [ $NUMBER_OF_INTERACTIONS -gt 1 ]
 then
