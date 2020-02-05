@@ -60,7 +60,6 @@ NUMBER_OF_INTERACTIONS=$(cat $INTERACTIONS | sort | uniq | wc -l)
 
 if [ $NUMBER_OF_INTERACTIONS -gt 1 ]
 then
-  cd $REPORT_DIR
   zip $REPORT_ARCHIVE *
   echo -e "\nDownload the full report [$REPORT_ARCHIVE] using single-use, and expiring, file.io link at:"
   curl -F "file=@$REPORT_ARCHIVE" https://file.io 
