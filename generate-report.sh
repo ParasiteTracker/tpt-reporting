@@ -56,9 +56,9 @@ cat $REVIEW_BY_COLLECTION
 
 echo -e "\nFor more information, see $PWD/$REPORT_DIR"
 
-NUMBER_OF_INTERACTIONS=$(cat $INTERACTIONS | wc -l)
+NUMBER_OF_INTERACTIONS=$(cat $INTERACTIONS | wc -l | sort | uniq)
 
-if [ $NUMBER_OF_INTERACTIONS -gt 0 ]
+if [ $NUMBER_OF_INTERACTIONS -gt 1 ]
 then
   zip $REPORT_ARCHIVE $REPORT_DIR/*
   echo -e "\nDownload the full report [$REPORT_ARCHIVE] using single-use, and expiring, file.io link at:"
