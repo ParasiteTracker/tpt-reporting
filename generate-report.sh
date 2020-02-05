@@ -21,12 +21,14 @@ REVIEW_BY_COLLECTION=$REPORT_DIR/review_notes_by_collection.tsv
 INTERACTIONS=$REPORT_DIR/interactions.tsv
 INTERACTIONS_BY_COLLECTION=$REPORT_DIR/interactions_by_collection.tsv
 
+echo "using elton version $(elton version)"
+
 # updating TPT affiliated elton datasets
 if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
-  cat datasets.tsv | xargs java -Xmx4G -Dgithub.client.id=$GITHUB_CLIENT_ID -Dgithub.client.secret=$GITHUB_CLIENT_SECRET -jar $(which elton) update 
-else
-  cat datasets.tsv | xargs elton update
+  echo "Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables to avoid GitHub API rate limiting (see https://developer.github.com/v3/rate_limit/) ." 
 fi
+
+cat datasets.tsv | xargs elton update
 
 echo -e "\n"
 
