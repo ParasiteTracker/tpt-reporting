@@ -10,8 +10,6 @@
 #
 #
 
-set -x
-
 TODAY=$(date "+%Y-%m-%d")
 REPORT_DIR="$PWD/output/$TODAY"
 REPORT_ARCHIVE="$PWD/output/tpt-globi-report-$TODAY.zip"
@@ -31,11 +29,26 @@ ELTON_VERSION=$(elton version)
 echo "using elton version $ELTON_VERSION"
 
 # updating TPT affiliated elton datasets
-if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
-  echo "Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables to avoid GitHub API rate limiting (see https://developer.github.com/v3/rate_limit/) ." 
-fi
 
-echo "$DATASETS_UNDER_REVIEW" | xargs -L1 elton update
+function checkRateLimit {
+  if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
+    echo "Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables to avoid GitHub API rate limiting (see https://developer.github.com/v3/rate_limit/) ."
+    echo current limit:
+    curl https://api.github.com/rate_limit
+
+  else
+    echo current limits for clientId/Secret:
+    curl -u $GITHUB_CLIENT_ID:$GITHUB_CLIENT_SECRET https://api.github.com/rate_limit 
+  fi
+}
+
+
+# update all at once to reduce github api requests
+for dataset in $DATASETS_UNDER_REVIEW
+do
+   checkRateLimit
+   elton update "$dataset"
+done
 
 echo -e "\n"
 
