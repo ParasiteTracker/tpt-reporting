@@ -16,8 +16,8 @@ TODAY=$(date "+%Y-%m-%d")
 REPORT_DIR=output/$TODAY
 REPORT_ARCHIVE=output/tpt-globi-report-$TODAY.zip
 mkdir -p $REPORT_DIR
-REVIEW=$REPORT_DIR/review_notes.tsv
-REVIEW_BY_COLLECTION=$REPORT_DIR/review_notes_by_collection.tsv
+REVIEW=$REPORT_DIR/review_issues.tsv
+REVIEW_BY_COLLECTION=$REPORT_DIR/review_issues_by_collection.tsv
 INTERACTIONS=$REPORT_DIR/interactions.tsv
 INTERACTIONS_BY_COLLECTION=$REPORT_DIR/interactions_by_collection.tsv
 
@@ -40,8 +40,8 @@ echo -e "\n"
 # generating interaction data
 cat datasets.tsv | xargs -L1 elton interactions | tail -n +2 >> $INTERACTIONS
 
-# group review notes by collection
-echo -e "#notes\tnamespace\tinstitutionCode\tcollectionCode\tnote" > $REVIEW_BY_COLLECTION
+# group review issues by collection
+echo -e "#issues\tnamespace\tinstitutionCode\tcollectionCode\tnote" > $REVIEW_BY_COLLECTION
 cat $REVIEW | awk -F '\t' '{ print $4 "\t" $9 "\t" $10 "\t" $6 }' | sort | uniq -c | sort -nr | sed -E $'s/[ ]*//;s/[ ]/\t/' >> $REVIEW_BY_COLLECTION
 
 # group interaction data by collection
