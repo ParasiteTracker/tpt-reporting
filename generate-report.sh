@@ -24,7 +24,7 @@ INTERACTIONS="$REPORT_DIR/indexed_interactions.tsv"
 NAMES="$REPORT_DIR/indexed_names.tsv"
 INTERACTIONS_BY_COLLECTION="$REPORT_DIR/indexed_interactions_by_collection.tsv"
 
-DATASETS_UNDER_REVIEW=$(cat datasets.tsv)
+DATASETS_UNDER_REVIEW="$(cat datasets.tsv)"
 
 ELTON_VERSION=$(elton version)
 
@@ -35,21 +35,21 @@ if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
   echo "Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables to avoid GitHub API rate limiting (see https://developer.github.com/v3/rate_limit/) ." 
 fi
 
-echo $DATASETS_UNDER_REVIEW | xargs -L1 elton update
+echo "$DATASETS_UNDER_REVIEW" | xargs -L1 elton update
 
 echo -e "\n"
 
 # generating review reports
 
-echo $DATASETS_UNDER_REVIEW | xargs -L1 elton review --type info,note | tail -n +2 > "$REVIEW"
+echo "$DATASETS_UNDER_REVIEW" | xargs -L1 elton review --type info,note | tail -n +2 > "$REVIEW"
 
 echo -e "\n"
 
 # generating interaction data
-echo $DATASETS_UNDER_REVIEW | xargs -L1 elton interactions > "$INTERACTIONS"
+echo "$DATASETS_UNDER_REVIEW" | xargs -L1 elton interactions > "$INTERACTIONS"
 
 # generate names
-echo $DATASETS_UNDER_REVIEW | xargs -L1 elton names > "$NAMES"
+echo "$DATASETS_UNDER_REVIEW" | xargs -L1 elton names > "$NAMES"
 
 # group review issues by collection
 echo -e "institutionCode\tcollectionCode\tdistinctReviewCommentCount\ttype\tcomment" > "$REVIEW_BY_COLLECTION"
@@ -71,7 +71,7 @@ cat "$INTERACTIONS_BY_COLLECTION"
 echo -e "\n---- distinct review comment count by institution, collection and review comment type ----"
 cat "$REVIEW_BY_COLLECTION"
 
-echo $DATASETS_UNDER_REVIEW | xargs -L1 elton datasets > "$DATASET_INFO"
+echo "$DATASETS_UNDER_REVIEW" | xargs -L1 elton datasets > "$DATASET_INFO"
 
 DATASET_REFERENCES=$(cat $DATASET_INFO | cut -f2,3,4 | tail -n +2 | sed -E 's/\t/ accessed via /' | sed -E 's/^/ - /g' | sed -E 's/\t/ on /')
 
