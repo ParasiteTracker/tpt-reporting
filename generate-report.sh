@@ -22,9 +22,10 @@ INTERACTIONS_FULL="$REPORT_DIR/indexed_interactions_full.tsv.gz"
 INTERACTIONS_SIMPLE="$REPORT_DIR/indexed_interactions_simple.tsv.gz"
 DATASET_INFO="$REPORT_DIR/datasets_under_review.tsv"
 
-DATASETS_UNDER_REVIEW="$(cat datasets.tsv)"
-DATASETS_UNDER_REVIEW_HEAD="$(head -n1 datasets.tsv)"
-DATASETS_UNDER_REVIEW_TAIL="$(tail -n+2 datasets.tsv)"
+DATASET_LIST_FILE=${:-datasets.tsv}
+DATASETS_UNDER_REVIEW="$(cat $DATASET_LIST_FILE)"
+DATASETS_UNDER_REVIEW_HEAD="$(head -n1 $DATASET_LIST_FILE)"
+DATASETS_UNDER_REVIEW_TAIL="$(tail -n+2 $DATASET_LIST_FILE)"
 
 
 ELTON_CMD="elton"
