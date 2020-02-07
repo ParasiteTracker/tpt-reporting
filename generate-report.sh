@@ -39,15 +39,11 @@ echo "using elton version $ELTON_VERSION"
 
 function checkRateLimit() {
   GITHUB_VARS=""
-  if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
-    echo "Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables to avoid GitHub API rate limiting (see https://developer.github.com/v3/rate_limit/) ."
-    echo current limit:
-  else
-    echo current limits for clientId/Secret:
+  if ! [[ -z "${GITHUB_CLIENT_ID}" ]]
+  then
     GITHUB_VARS="-u $GITHUB_CLIENT_ID:$GITHUB_CLIENT_SECRET"
   fi
   REMAINING_SEARCH=$(curl --silent $GITHUB_VARS https://api.github.com/rate_limit | grep --after-context 2 search | grep remaining | sed -E 's/[^[0-9]]*//g')
-  echo "[$REMAINING_SEARCH] github search requests left"
   return $REMAINING_SEARCH
 }
 
@@ -57,11 +53,12 @@ function updateAll {
   do
     local SLEEP_TIME=5
     local MINIMUM_REQUEST_QUOTA=10
+    echo -n "checking github api limits."
     checkRateLimit
     local requestsLeft=$?
     while [ $requestsLeft -lt $MINIMUM_REQUEST_QUOTA ]
     do 
-      echo "sleep [$SLEEP_TIME]s to wait for at least [$MINIMUM_REQUEST_QUOTA] request quota"
+      echo -n "."
       sleep $SLEEP_TIME
       checkRateLimit
       requestsLeft=$?
@@ -71,8 +68,6 @@ function updateAll {
 }
 
 updateAll
-
-echo -e "\n"
 
 # generating review reports
 
