@@ -1,6 +1,6 @@
 os:
   - linux
-  - osx
+#  - osx
 install:
 - sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/globalbioticinteractions/elton/releases/download/0.8.0/elton.jar)
   > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
