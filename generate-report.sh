@@ -73,15 +73,16 @@ echo "$DATASETS_UNDER_REVIEW_HEAD" | xargs -L1 $ELTON_CMD interactions | gzip > 
 echo "$DATASETS_UNDER_REVIEW_TAIL" | xargs -L1 $ELTON_CMD interactions --no-header | gzip >> "$INTERACTIONS_FULL"
 
 # group review issues by collection
-echo -e "institutionCode\tcollectionId\tcollectionCode\tdistinctReviewCommentCount\ttype\tcomment" > "$REVIEW_BY_COLLECTION"
-zcat $REVIEW | awk -F '\t' '{ print $9 "\t" $11 "\t" $10 "\t" $5 "\t" $6 }' | sort | uniq -c | sort -nr | sed -E $'s/[ ]*//;s/[ ]/\t/' | awk -F '\t' '{ print $2 "\t" $3 "\t" $4 "\t" $1 "\t" $5 "\t" $6 }' | sed -E $'s/\tnote\t/\tissue\t/g' | sort >> "$REVIEW_BY_COLLECTION"
+echo -e "institutionCode\tcollectionId\tcollectionCode\tsourceCitation\tdistinctReviewCommentCount\ttype\tcomment" > "$REVIEW_BY_COLLECTION"
+zcat $REVIEW | tail -n +2 | awk -F '\t' '{ print $9 "\t" $11 "\t" $10 "\t" $14 "\t" $5 "\t" $6 }' | sort | uniq -c | sort -nr | sed -E $'s/[ ]*//;s/[ ]/\t/' | awk -F '\t' '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $1 "\t" $6 "\t" $7 }' | sed -E $'s/\tnote\t/\tissue\t/g' | sort >> "$REVIEW_BY_COLLECTION"
+
 # review summary
 echo -e "distinctReviewCommentCount\ttype\tcomment" > "$REVIEW_SUMMARY"
-zcat $REVIEW | awk -F '\t' '{ print $5 "\t" $6 }' | sort | uniq -c | sort -nr | sed -E $'s/[ ]*//;s/[ ]/\t/' | sed -E $'s/\tnote\t/\tissue\t/g' | sort >> "$REVIEW_SUMMARY"
+zcat $REVIEW | tail -n +2 | awk -F '\t' '{ print $5 "\t" $6 }' | sort | uniq -c | sort -nr | sed -E $'s/[ ]*//;s/[ ]/\t/' | sed -E $'s/\tnote\t/\tissue\t/g' | sort >> "$REVIEW_SUMMARY"
 
 # group interaction data by collection
-echo -e "institutionCode\tcollectionId\tcollectionCode\tindexedInteractionRecordCount\tinteractionTypeName\tinteractionTypeId" > "$INTERACTIONS_BY_COLLECTION"
-zcat "$INTERACTIONS_FULL" | tail -n +2 | awk -F '\t' '{ print $6 "\t" $5 "\t" $4 "\t" $20 "\t" $19 }' | sort | uniq -c | sort -nr | sed -E $'s/[ ]*//;s/[ ]/\t/' | awk -F '\t' '{ print $2 "\t" $3 "\t" $4 "\t" $1  "\t" $5 "\t" $6 }' | sort >> "$INTERACTIONS_BY_COLLECTION"
+echo -e "institutionCode\tcollectionId\tcollectionCode\tsourceCitation\tindexedInteractionRecordCount\tinteractionTypeName\tinteractionTypeId" > "$INTERACTIONS_BY_COLLECTION"
+zcat "$INTERACTIONS_FULL" | tail -n +2 | awk -F '\t' '{ print $6 "\t" $5 "\t" $4 "\t" $49 "\t" $20 "\t" $19 }' | sort | uniq -c | sort -nr | sed -E $'s/[ ]*//;s/[ ]/\t/' | awk -F '\t' '{ print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $1  "\t" $6 "\t" $7 }' | sort >> "$INTERACTIONS_BY_COLLECTION"
 
 zcat "$INTERACTIONS_FULL" | awk -F '\t' '{ print $6 "\t" $5 "\t" $4 "\t" $3 "\t" $8 "\t" $20 "\t" $27 }' | gzip > "$INTERACTIONS_SIMPLE"
 
