@@ -10,7 +10,9 @@ jobs:
   include:
     - stage: review
       script: "./generate-report.sh datasets.tsv"
+    - stage: review
       script: "./generate-report.sh datasets-vertnet.tsv"
+    - stage: review
       script: "./generate-report.sh datasets-scan.tsv"
 env:
   global:
