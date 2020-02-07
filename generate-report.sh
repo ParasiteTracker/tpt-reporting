@@ -27,7 +27,7 @@ DATASETS_UNDER_REVIEW_HEAD="$(head -n1 datasets.tsv)"
 DATASETS_UNDER_REVIEW_TAIL="$(tail -n+2 datasets.tsv)"
 
 
-ELTON_CMD="java -Xmx4G -jar /home/jorrit/proj/globi/elton/target/elton-0.3.5-SNAPSHOT-jar-with-dependencies.jar"
+ELTON_CMD="elton"
 ELTON_VERSION=$($ELTON_CMD version)
 
 #set -x
