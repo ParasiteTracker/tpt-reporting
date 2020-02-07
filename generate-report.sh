@@ -36,23 +36,33 @@ echo "using elton version $ELTON_VERSION"
 
 # updating TPT affiliated elton datasets
 
-function checkRateLimit {
+function checkRateLimit() {
+  GITHUB_VARS=""
   if [[ -z "${GITHUB_CLIENT_ID}" ]]; then
     echo "Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables to avoid GitHub API rate limiting (see https://developer.github.com/v3/rate_limit/) ."
     echo current limit:
-    curl --silent https://api.github.com/rate_limit
-
   else
     echo current limits for clientId/Secret:
-    curl --silent -u $GITHUB_CLIENT_ID:$GITHUB_CLIENT_SECRET https://api.github.com/rate_limit 
+    GITHUB_VARS="-u $GITHUB_CLIENT_ID:$GITHUB_CLIENT_SECRET"
   fi
+  REMAINING_SEARCH=$(curl --silent $GITHUB_VARS https://api.github.com/rate_limit | grep --after-context 2 search | grep remaining | sed -E 's/[^[0-9]]*//g')
+  echo "[$REMAINING_SEARCH] github search requests left"
+  return $REMAINING_SEARCH
 }
 
 function updateAll {
   # update all at once to reduce github api requests
   for dataset in $DATASETS_UNDER_REVIEW
   do
+    local SLEEP_TIME=5
+    local MINIMUM_REQUEST_QUOTA=10
     checkRateLimit
+    while [ $? -lt $MINIMUM_REQUEST_QUOTA ]
+    do 
+      echo "sleep [$SLEEP_TIME]s to wait for at least [$MINIMUM_REQUEST_QUOTA] request quota"
+      sleep $SLEEP_TIME
+      checkRateLimit
+    done
     $ELTON_CMD update "$dataset"
   done
 }
