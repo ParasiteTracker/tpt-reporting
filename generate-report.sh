@@ -58,11 +58,13 @@ function updateAll {
     local SLEEP_TIME=5
     local MINIMUM_REQUEST_QUOTA=10
     checkRateLimit
-    while [ $? -lt $MINIMUM_REQUEST_QUOTA ]
+    local requestsLeft=$?
+    while [ $requestsLeft -lt $MINIMUM_REQUEST_QUOTA ]
     do 
       echo "sleep [$SLEEP_TIME]s to wait for at least [$MINIMUM_REQUEST_QUOTA] request quota"
       sleep $SLEEP_TIME
       checkRateLimit
+      requestsLeft=$?
     done
     $ELTON_CMD update "$dataset"
   done
