@@ -31,38 +31,16 @@ DATASETS_UNDER_REVIEW_TAIL="$(tail -n+2 $DATASET_LIST_FILE)"
 ELTON_CMD="elton"
 ELTON_VERSION=$($ELTON_CMD version)
 
-#set -x
+set -x
 
 echo "using elton version $ELTON_VERSION"
 
 # updating TPT affiliated elton datasets
 
-function checkRateLimit() {
-  GITHUB_VARS=""
-  if ! [[ -z "${GITHUB_CLIENT_ID}" ]]
-  then
-    GITHUB_VARS="-u $GITHUB_CLIENT_ID:$GITHUB_CLIENT_SECRET"
-  fi
-  REMAINING_SEARCH=$(curl --silent $GITHUB_VARS https://api.github.com/rate_limit | grep --after-context 2 search | grep remaining | sed -E 's/[^[0-9]]*//g')
-  return $REMAINING_SEARCH
-}
-
 function updateAll {
   # update all at once to reduce github api requests
   for dataset in $DATASETS_UNDER_REVIEW
   do
-    local SLEEP_TIME=5
-    local MINIMUM_REQUEST_QUOTA=10
-    echo -n "checking github api limits."
-    checkRateLimit
-    local requestsLeft=$?
-    while [ $requestsLeft -lt $MINIMUM_REQUEST_QUOTA ]
-    do 
-      echo -n "."
-      sleep $SLEEP_TIME
-      checkRateLimit
-      requestsLeft=$?
-    done
     $ELTON_CMD update "$dataset"
   done
 }
@@ -156,7 +134,7 @@ datasets_under_review.tsv:
 
 EOF
 
-echo -e "\nFor more information, see $PWD/$REPORT_DIR"
+echo -e "\nFor more information, see $REPORT_DIR"
 
 NUMBER_OF_INTERACTIONS=$(cat "$INTERACTIONS_FULL" | sort | uniq | wc -l)
 
@@ -169,6 +147,8 @@ then
   echo -e "\nDownload the full report [$REPORT_ARCHIVE] using single-use, and expiring, file.io link at:"
   curl -F "file=@$REPORT_ARCHIVE" https://file.io 
 else
-  echo -e "\nCannot create report because no interaction records were found. Please check log."
+  echo "Cannot create report because no interaction records were found. Please check log."
+  echo "Please check you have the latest elton installed. You are using Elton v[$ELTON_VERSION]. See https://github.com/globalbioticinteractions/elton#install for install instructions and https://github.com/globalbioticinteractions/elton/releases/latest for latest version )."
+
   exit 1
 fi
