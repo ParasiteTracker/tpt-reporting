@@ -6,10 +6,11 @@ install:
   > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
 #script:
 #- "./generate-report.sh $DATASETS"
-jobs:
-  include:
-    - stage: review
-      script: "./generate-report.sh datasets.tsv"
+- "./generate-report.sh $DATASETS"
+#jobs:
+#  include:
+#    - stage: review
+#      script: "./generate-report.sh datasets.tsv"
 #    - stage: review
 #      script: "./generate-report.sh datasets-vertnet.tsv"
 #    - stage: review
