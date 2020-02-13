@@ -2,19 +2,9 @@ os:
   - linux
   - osx
 install:
-  - sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/globalbioticinteractions/elton/releases/download/0.8.4/elton.jar)
-  > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
+  - sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/globalbioticinteractions/elton/releases/download/0.8.4/elton.jar) > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
 script: 
   - ./generate-report.sh
-#- "./generate-report.sh $DATASETS"
-#jobs:
-#  include:
-#    - stage: review
-#      script: "./generate-report.sh datasets.tsv"
-#    - stage: review
-#      script: "./generate-report.sh datasets-vertnet.tsv"
-#    - stage: review
-#      script: "./generate-report.sh datasets-scan.tsv"
 env:
   global:
   - secure: xqhowNr3SbjtxlIhUP6ofN73tKqsgg+llNj0vy1+awsfaG6mYEYanExEIAzKf2ODrVqnS/s0gS2ytOpKxqhrPzU6m8GdQusTtfxYxzQ9zsmpn+HjEimH1kCudB+Nub+XWoguRXWLNetsYTHW7wliadCR3BU3FYXhMO+JFDeWEaZNY7RJYfFnmPItzLslNyWW8k+OV/TZbupzl9z9L0364TE8x/OMyOrH2tf+wEesmmRp+iq+r/iLWgH2cooA2hPGdWRB8X9HAaGrp1OsjK8eHYfeBalnuy9QQQX9z/T7DPsNIuPtz3p92GjeX4Z/cwNKlQZOHGNayKV4lhlIxM/POHugXEusCJxvbPCcsg3EQHQivXln3gZACbfdChNQ2KG+VtLsGTcN14TDbmVPMO0GaNmGlgXUXl/7WidjaCGQ6X+VL232zq8huTlI8EIpY3xfRl/u1oBAS3OfbSGGZnTfnboRg6NJo7DoeOpPsp78ZBJDYwBhgguwiIGzVLa0T71jLDflLXS+CZofHe2PnoQQJjb3p+/4A0yW1RQsU++wd7PnPjclMM78kUVeH9aL2a4HbBGcpJ48zB8IbLtETWySZntTrR+PXlfM3IPLmbPk80sCirwxHj7D+eJZqSt7RZtBbstfEv1gR4dhXeTnpm3uTDc4dY4bhhbHKxEB9gwUHy0=
