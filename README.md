@@ -3,4 +3,4 @@
 # tpt-reporting
 Terrestrial Parasite Tracking Reporting Methods 
 
-Please click on above travis badge to view current TPT reports.
+Please click on above travis badge to view current TPT reports. 
