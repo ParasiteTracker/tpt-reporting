@@ -6,7 +6,6 @@ install:
   > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
 script: 
   - ./generate-report.sh
-
 #- "./generate-report.sh $DATASETS"
 #jobs:
 #  include:
