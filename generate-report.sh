@@ -136,7 +136,7 @@ EOF
 
 echo -e "\nFor more information, see $REPORT_DIR"
 
-NUMBER_OF_INTERACTIONS=$(cat "$INTERACTIONS_FULL" | sort | uniq | wc -l)
+NUMBER_OF_INTERACTIONS=$(cat "$INTERACTIONS_FULL" | gunzip | sort | uniq | wc -l)
 
 if [ $NUMBER_OF_INTERACTIONS -gt 1 ]
 then
