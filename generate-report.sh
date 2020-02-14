@@ -49,8 +49,8 @@ updateAll
 
 # generating review reports
 
-echo "${DATASETS_UNDER_REVIEW_HEAD}" | xargs -L1 $ELTON_CMD review --type note | gzip > "$REVIEW"
-echo "${DATASETS_UNDER_REVIEW_TAIL}" | xargs -L1 $ELTON_CMD review --no-header --type note | tail -n +2 | gzip >> "$REVIEW"
+echo "${DATASETS_UNDER_REVIEW_HEAD}" | xargs -L1 $ELTON_CMD review --type info,note | gzip > "$REVIEW"
+echo "${DATASETS_UNDER_REVIEW_TAIL}" | xargs -L1 $ELTON_CMD review --no-header --type info,note | tail -n +2 | gzip >> "$REVIEW"
 
 echo -e "\n"
 
