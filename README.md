@@ -6,3 +6,12 @@
 Terrestrial Parasite Tracking Reporting Methods 
 
 Please click on above travis badge to view current TPT reports. 
+
+## Creating a report
+1. Check for new datasets in the TPT integration table
+
+> curl -Ls "https://raw.githubusercontent.com/globalbioticinteractions/globalbioticinteractions.github.io/master/_data/parasitetracker.tsv" | tail -n+2 | cut -f9 | sort | uniq
+
+2. Update datasets.tsv with the new datasets
+
+3. run report script: generate-report.sh
