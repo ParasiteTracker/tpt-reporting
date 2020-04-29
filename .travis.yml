@@ -2,7 +2,7 @@ os:
   - linux
   - osx
 install:
-  - sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/globalbioticinteractions/elton/releases/download/0.8.4/elton.jar) > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
+  - sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/globalbioticinteractions/elton/releases/download/0.9.5/elton.jar) > /usr/local/bin/elton && chmod +x /usr/local/bin/elton' && elton version
 script: 
   - ./generate-report.sh datasets-travis-test.tsv
 env:
