@@ -172,7 +172,13 @@ NUMBER_OF_INTERACTIONS=$(cat "$INTERACTIONS_FULL" | gunzip | sort | uniq | wc -l
 
 if [ $NUMBER_OF_INTERACTIONS -gt 1 ]
 then
-  publishReview
+  if [ -z ${TRAVIS} ]
+  then
+    echo "Done generating report. See [${REPORT_DIR}] for results."
+  else
+    echo "Detected https://travis-ci.org environment, uploading report to https://file.io"
+    publishReview
+  fi
 else
   echo "Cannot create report because no interaction records were found. Please check log."
   echo "Please check you have the latest elton installed. You are using Elton v[$ELTON_VERSION]. See https://github.com/globalbioticinteractions/elton#install for install instructions and https://github.com/globalbioticinteractions/elton/releases/latest for latest version )."
