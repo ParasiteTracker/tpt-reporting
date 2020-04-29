@@ -154,7 +154,7 @@ echo -e "\nFor more information, see $REPORT_DIR"
 function publishReview {
   OLD_DIR=$PWD
   cd "$REPORT_DIR"
-  zip "$REPORT_ARCHIVE" README review_summary.tsv review_summary_by_collection.tsv review_comments.tsv.gz indexed_interactions_full.tsv.gz indexed_interactions_simple.tsv.gz datasets_under_review.tsv 
+  zip "$REPORT_ARCHIVE" README review_summary.tsv review_summary_by_collection.tsv review_comments.tsv.gz indexed_interactions_full.tsv.gz indexed_interactions_simple.tsv.gz datasets_under_review.tsv elton.jar 
   cd "$OLD_DIR"
   echo -e "\nDownload the full report [$REPORT_ARCHIVE] using single-use, and expiring, file.io link at:"
   curl -F "file=@$REPORT_ARCHIVE" https://file.io 
@@ -166,6 +166,7 @@ reviewDatasets
 indexInteractionData
 printReports
 generateReadme
+cp $(which $ELTON_CMD) $REPORT_DIR/elton.jar
 
 NUMBER_OF_INTERACTIONS=$(cat "$INTERACTIONS_FULL" | gunzip | sort | uniq | wc -l)
 
