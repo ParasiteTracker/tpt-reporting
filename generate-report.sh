@@ -86,7 +86,7 @@ cat "$INTERACTIONS_BY_COLLECTION"
   echo -e "\n---- distinct review comment count by institution, collection and review comment type ----"
   cat "$REVIEW_BY_COLLECTION"
 
-  echo "$DATASETS_UNDER_REVIEW" | xargs -L1 $ELTON_CMD datasets > "$DATASET_INFO"
+  echo "$DATASETS_UNDER_REVIEW" | xargs $ELTON_CMD datasets > "$DATASET_INFO"
 
   DATASET_REFERENCES=$(cat $DATASET_INFO | cut -f2,3,4 | tail -n +2 | sed -E 's/\t/ accessed via /' | sed -E 's/^/ - /g' | sed -E 's/\t/ on /')
 }
