@@ -140,6 +140,9 @@ indexed_interactions_simple.tsv.gz:
 datasets_under_review.tsv:
   Details on the datasets under review.
 
+elton.jar: 
+  Program used to update datasets and generate the review reports and associated indexed interactions.
+
 EOF
 
 }
