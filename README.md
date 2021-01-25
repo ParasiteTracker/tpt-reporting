@@ -13,7 +13,7 @@ Please click on above travis badge to view current TPT reports.
 Date of release | DOI
 --- | --- |
 February 24, 2020 | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3685365.svg)](https://doi.org/10.5281/zenodo.3685365)
-April 29, 2020 | 
+April 29, 2020 | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3778773.svg)](https://doi.org/10.5281/zenodo.3778773)
 
 
 ## Creating a new archived report
