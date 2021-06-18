@@ -1,1 +1,3 @@
 This version of the TPT dataset includes datasets that are also linked to parasite datasets via external links stored in the Darwin Core field associatedOccurrences. It is common in some datasets, such as those created using Arctos software, for external links to be included that provide a Weblink between two specimens. For example, a parasite specimen would have a link to the host specimen it was removed from. In this version, the host datasets are also included.
+
+Also in this version, the datasets included in this publication are specifically those institutions in the TPT project network and it does not include all datasets published by VertNet or SCAN. 
