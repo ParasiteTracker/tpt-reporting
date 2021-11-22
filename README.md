@@ -48,7 +48,7 @@ globalbioticinteractions/unhc-unhc
 e.g., 
 
 ```
-$ generate-report.sh somefile.tsv
+$ ./generate-report.sh somefile.tsv
 ...
 ```
 
